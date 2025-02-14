@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day</title>
+    <style>
+        /* General Styles */
+        body {
+            background-color: pink;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Cute Balloons */
+        .balloon {
+            position: absolute;
+            width: 60px; /* Smaller for mobile */
+            height: 80px; /* Smaller for mobile */
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ffffff, #ffcccb, #ff6f61);
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+            animation: float 4s infinite ease-in-out; /* Faster floating */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Balloon Faces */
+        .balloon::before {
+            content: 'DUDU BUBU KS'; /* Cute face emoji */
+            font-size: 15px; /* Smaller for mobile */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Balloon Highlights */
+        .balloon::after {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 30%;
+            width: 10px; /* Smaller for mobile */
+            height: 10px; /* Smaller for mobile */
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        /* Balloon Strings */
+        .balloon .string {
+            position: absolute;
+            bottom: -40px; /* Shorter for mobile */
+            left: 50%;
+            width: 2px;
+            height: 40px; /* Shorter for mobile */
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Balloon Positions and Colors */
+        .balloon-1 { left: 10%; top: 10%; animation-delay: 0s; }
+        .balloon-2 { left: 30%; top: 20%; animation-delay: 1s; }
+        .balloon-3 { left: 50%; top: 15%; animation-delay: 2s; }
+        .balloon-4 { left: 70%; top: 10%; animation-delay: 3s; }
+        .balloon-5 { left: 90%; top: 20%; animation-delay: 4s; }
+        .balloon-6 { left: 20%; top: 30%; animation-delay: 5s; }
+        .balloon-7 { left: 40%; top: 25%; animation-delay: 6s; }
+        .balloon-8 { left: 60%; top: 30%; animation-delay: 7s; }
+        .balloon-9 { left: 80%; top: 25%; animation-delay: 8s; }
+        .balloon-10 { left: 5%; top: 40%; animation-delay: 9s; }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+
+        /* Beat Animation */
+        @keyframes beat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Content */
+        .content {
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+        .gif {
+            width: 120px; /* Smaller for mobile */
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+        .text {
+            font-size: 18px; /* Smaller for mobile */
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Buttons */
+        .buttons {
+            display: flex;
+            gap: 10px; /* Smaller gap for mobile */
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .button {
+            padding: 10px 20px; /* Smaller padding for mobile */
+            font-size: 14px; /* Smaller font for mobile */
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            min-width: 80px; /* Smaller width for mobile */
+        }
+        .yes-button {
+            background: linear-gradient(45deg, #4CAF50, #81C784);
+            color: white;
+        }
+        .yes-button:hover {
+            background: linear-gradient(45deg, #81C784, #4CAF50);
+            transform: scale(1.1);
+        }
+        .no-button {
+            background: linear-gradient(45deg, #FF5252, #FF6F61);
+            color: white;
+            position: relative;
+            pointer-events: none; /* Make it unclickable */
+            opacity: 0.7;
+        }
+        .next-button {
+            background: linear-gradient(45deg, #6B5B95, #9575CD);
+            color: white;
+        }
+        .next-button:hover {
+            background: linear-gradient(45deg, #9575CD, #6B5B95);
+            transform: scale(1.1);
+        }
+
+        /* Play Music Button and Music GIF */
+        .music-container {
+            position: fixed;
+            bottom: 10px; /* Closer to the bottom for mobile */
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+        }
+        .play-music-button {
+            background: linear-gradient(45deg, #6B5B95, #9575CD);
+            color: white;
+            padding: 8px 16px; /* Smaller padding for mobile */
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            font-size: 14px; /* Smaller font for mobile */
+            transition: all 0.3s ease;
+        }
+        .music-gif {
+            width: 80px; /* Smaller for mobile */
+            height: auto;
+            display: none; /* Hidden by default */
+        }
+
+        /* Pulsing Animation */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .play-music-button.playing {
+            animation: pulse 1s infinite;
+            background: linear-gradient(45deg, #9575CD, #6B5B95);
+        }
+    </style>
+</head>
+<body>
+    <!-- Cute Balloons -->
+    <div class="balloon balloon-1"><div class="string"></div></div>
+    <div class="balloon balloon-2"><div class="string"></div></div>
+    <div class="balloon balloon-3"><div class="string"></div></div>
+    <div class="balloon balloon-4"><div class="string"></div></div>
+    <div class="balloon balloon-5"><div class="string"></div></div>
+    <div class="balloon balloon-6"><div class="string"></div></div>
+    <div class="balloon balloon-7"><div class="string"></div></div>
+    <div class="balloon balloon-8"><div class="string"></div></div>
+    <div class="balloon balloon-9"><div class="string"></div></div>
+    <div class="balloon balloon-10"><div class="string"></div></div>
+
+    <!-- Page 1 -->
+    <div id="page1" class="content">
+        <img class="gif" src="assets/bubu-dudu 11.gif" alt="Valentine GIF">
+        <div class="text">Hello Babe Bubu!!!</div>
+        <div class="text">You can play music for enjoy time</div>
+        <div class="text">Then click Next</div>
+        <div class="buttons">
+        <button class="button next-button" onclick="showPage(2)">Next</button>
+        </div>
+    </div>
+
+    <!-- Page 2 -->
+    <div id="page2" class="content" style="display: none;">
+        <img class="gif" src="flower dudu.gif" alt="Valentine GIF">
+        <div class="text">Question :</div>
+        <div class="text">Slanh B Heh Bubu ?</div>
+        <div class="text">Ber Yes b therb x100 / Ber No Therb 99 ..</div>
+        <div class="buttons">
+            <button class="button yes-button" onclick="showPage(3)">Yes</button>
+            <button class="button no-button">No</button>
+        </div>
+    </div>
+
+    <!-- Page 3 -->
+    <div id="page3" class="content" style="display: none;">
+        <img class="gif" src="happy dudu.gif" alt="Valentine GIF">
+        <div class="text">Yay B dg tha o click yes 100% hy</div>
+        <div class="text">(Mor pi No click ot kert haha)</div>
+        <button class="button next-button" onclick="showPage(4)">Next</button>
+    </div>
+
+    <!-- Page 4 -->
+    <div id="page4" class="content" style="display: none;">
+        <img class="gif" src="sseeyall-bubu-dudu.gif" alt="Valentine GIF">
+        <div class="text">This year valentine ot ban nv jit o te</div>
+        <div class="text">Som lerk ngai hai nah jam meet o therb sarob</div>
+        <button class="button next-button" onclick="showPage(5)">Next</button>
+    </div>
+
+    <!-- Page 5 -->
+    <div id="page5" class="content" style="display: none;">
+        <img class="gif" src="eat.gif" alt="Valentine GIF">
+        <div class="text">Jam o mor pp jam date nham ey kor ban</div>
+        <button class="button next-button" onclick="showPage(6)">Next</button>
+    </div>
+
+    <!-- Page 6 -->
+    <div id="page6" class="content" style="display: none;">
+        <img class="gif" src="movie.gif" alt="Valentine GIF">
+        <div class="text">Movie kor ban haha</div>
+        <button class="button next-button" onclick="showPage(7)">Next</button>
+    </div>
+
+    <!-- Page 7 -->
+    <div id="page7" class="content" style="display: none;">
+        <img class="gif" src="kiri-ezgif.com-video-to-gif-converter.gif" alt="Valentine GIF">
+        <div class="text">We have been Together 549 Days hai Bubu</div>
+        <div class="text">B nv tae slanh babe bubu klang tdel</div>
+        <button class="button next-button" onclick="showPage(8)">Next</button>
+    </div>
+
+    <!-- Page 8 -->
+    <div id="page8" class="content" style="display: none;">
+        <img class="gif" src="bubu blade.gif" alt="Valentine GIF">
+        <div class="text">Sorry O... Somtime time tver oy o angry</div>
+        <button class="button next-button" onclick="showPage(9)">Next</button>
+    </div>
+
+    <!-- Page 9 -->
+    <div id="page9" class="content" style="display: none;">
+        <img class="gif" src="ang 1.gif" alt="Valentine GIF">
+        <div class="text">Sometime tver oy o ot sabay jit</div>
+        <button class="button next-button" onclick="showPage(10)">Next</button>
+    </div>
+
+    <!-- Page 10 -->
+    <div id="page10" class="content" style="display: none;">
+        <img class="gif" src="cute-dudu-face.gif" alt="Valentine GIF">
+        <div class="text">Tae b ng khom tver jea Dudu</div>
+        <div class="text">Dudu kur oy slanh lbos o lhot tv</div>
+        <button class="button next-button" onclick="showPage(11)">Next</button>
+    </div>
+
+    <!-- Page 11 -->
+    <div id="page11" class="content" style="display: none;">
+        <img class="gif" src="hug.gif" alt="Valentine GIF">
+        <div class="text">Orkun o del slanh b</div>
+        <div class="text">hy kom dor b motivate b</div>
+        <div class="text">B mean kdey sok nas del mean o knong jivit</div>
+        <button class="button next-button" onclick="showPage(12)">Next</button>
+    </div> 
+
+    <!-- Page 12 -->
+    <div id="page12" class="content" style="display: none;">
+        <img class="gif" src="dudu-giving-flowers-bubu-flowers.gif" alt="Valentine GIF">
+        <div class="text">Happy Valebtine Day my love</div>
+        <button class="button next-button" onclick="showPage(13)">Next</button>
+        </div>
+    </div>
+
+    <!-- Page 13 -->
+    <div id="page13" class="content" style="display: none;">
+        <img class="gif" src="bubu-dudu-sseeyall.gif" alt="Valentine GIF">
+    </div>
+
+    <!-- Music Container (Always Visible) -->
+    <div class="music-container">
+        <button class="play-music-button" onclick="playSong()">Play Music</button>
+        <img class="music-gif" src="dudu-bubu-dancing-dancung.gif" alt="Music GIF">
+    </div>
+
+    <!-- Audio -->
+    <audio id="valentine-song" loop>
+        <source src="ema2.mp3" type="audio/mpeg">
+        <source src="ema1.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        // Function to show pages
+        function showPage(pageNumber) {
+            // Hide all pages
+            for (let i = 1; i <= 13; i++) {
+                document.getElementById(`page${i}`).style.display = 'none';
+            }
+            // Show the selected page
+            document.getElementById(`page${pageNumber}`).style.display = 'flex';
+        }
+
+        // Function to play the song
+        function playSong() {
+            const audio = document.getElementById('valentine-song');
+            const playButton = document.querySelector('.play-music-button');
+            const musicGif = document.querySelector('.music-gif');
+            const balloons = document.querySelectorAll('.balloon');
+
+            if (audio.paused) {
+                audio.play();
+                playButton.textContent = "🎵 Playing...";
+                playButton.classList.add('playing'); // Add pulsing effect
+                musicGif.style.display = 'block'; // Show the music GIF
+
+                // Add beat animation to balloons
+                balloons.forEach(balloon => {
+                    balloon.style.animation = 'beat 0.5s infinite';
+                });
+            } else {
+                audio.pause();
+                playButton.textContent = "Play Music";
+                playButton.classList.remove('playing'); // Remove pulsing effect
+                musicGif.style.display = 'none'; // Hide the music GIF
+
+                // Remove beat animation from balloons
+                balloons.forEach(balloon => {
+                    balloon.style.animation = 'float 4s infinite ease-in-out';
+                });
+            }
+        }
+    </script>
+</body>
+</html>
